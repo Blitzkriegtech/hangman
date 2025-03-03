@@ -9,12 +9,13 @@ class Hangman
     @lives = 7
     @guessed_letters = []
     @wrong_letters = []
-    @board = []
+    @board = setup_board
   end
 
   def play
     puts "\nWelcome to HANGMAN! >_<"
-    puts "Newgame commence...\nSECRET WORD has #{secret_word.size} letters."
+    puts "\nGame commencing...\nSECRET WORD has #{secret_word.size} letters."
+    display_board
   end
 
   def parse_txt
@@ -32,6 +33,13 @@ class Hangman
 
     words.sample.downcase
   end
-end
 
-Hangman.new.secret_word
+  def setup_board
+    Array.new(secret_word.size, '_')
+  end
+
+  def display_board
+    puts board.join(' ')
+  end
+end
+Hangman.new.play
