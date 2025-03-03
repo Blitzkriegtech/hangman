@@ -41,5 +41,32 @@ class Hangman
   def display_board
     puts board.join(' ')
   end
+
+  def display_wrong_letters
+    wrong_letters.join('')
+  end
+
+  def valid_guess
+    loop do
+      print 'Please take a guess: '
+      input = gets.chomp.downcase
+
+      if %w[exit quit].include?(input) then quit_game
+      elsif !input.match?(/\A[a-z]\z/) then puts "Invalid input.\nPlease input a LETTER, 1 at a time."
+      elsif already_guessed?(input) then puts "'#{input} was already used. Pick a NEW ONE!'"
+      else
+        return input
+      end
+    end
+  end
+
+  def already_guessed?(letter)
+    guessed_letters.include?(letter)
+  end
+
+  def quit_game
+    puts "Thank you for playing!\nBTW the SECRET WORD was: #{secret_word}."
+    exit
+  end
 end
 Hangman.new.play
