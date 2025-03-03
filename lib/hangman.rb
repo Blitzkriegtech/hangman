@@ -5,7 +5,7 @@ class Hangman
   attr_reader :board, :secret_word, :guessed_letters, :wrong_letters
 
   def initialize
-    @secret_word = []
+    @secret_word = gen_secret_word
     @lives = 7
     @guessed_letters = []
     @wrong_letters = []
@@ -21,10 +21,17 @@ class Hangman
     File.open('word.txt', 'r') do |file|
       file.each_line.with_object([]) do |word, arr|
         stripped_word = word.strip
-        arr << stripped_word if (5..12).include?(stripped_word.size) && stripped_word.match?(/\A[a-z]+\z/)
+        arr << stripped_word if (5..12).include?(stripped_word.size)
       end
     end
   end
+
+  def gen_secret_word
+    words = parse_txt
+    raise 'No valid words in dictionary!' if words.empty?
+
+    words.sample.downcase
+  end
 end
 
-Hangman.new.parse_txt
+Hangman.new.secret_word
