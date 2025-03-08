@@ -30,7 +30,7 @@ module SaveLoad
       if file && File.exist?(file)
         YAML.safe_load(File.read(file), permitted_classes: [Hangman])
       else
-        puts 'Invalid save file selected.'
+        puts "Invalid save file selected.\n\nResuming game..."
       end
     end
 
