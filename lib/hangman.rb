@@ -16,8 +16,8 @@ class Hangman
   end
 
   def play
-    puts "\nWelcome to HANGMAN! >_<"
-    puts "\nGame commencing...\nSECRET WORD has #{secret_word.size} letters."
+    puts "\nGame commencing..."
+    puts "\n***HANGMAN! >_<****\nSECRET WORD has #{secret_word.size} letters."
     display_game_state
 
     until game_over?
@@ -26,6 +26,18 @@ class Hangman
       display_game_state
     end
     conclude_game
+  end
+
+  def reset?
+    loop do
+      print "\nDo you want to play again?(Y/N): "
+      response = gets.chomp.downcase.strip
+      result = { 'y' => true, 'n' => false }[response]
+
+      return result unless result.nil?
+
+      puts 'Invalid selection. Try again.'
+    end
   end
 
   private
@@ -79,13 +91,6 @@ class Hangman
     loop do
       print 'Please take a guess: '
       input = gets.chomp.downcase
-
-      # if %w[exit quit].include?(input) then quit_game
-      # elsif !input.match?(/\A[a-z]\z/) then puts "Invalid input.\nPlease input a LETTER, 1 at a time."
-      # elsif already_guessed?(input) then puts "'#{input} was already used. Pick a NEW ONE!'"
-      # else
-      #   return input
-      # end
       case input
       when 'exit', 'quit', 'QUIT', 'EXIT', 'Quit', 'Exit' then quit_game
       when 'save', 'SAVE', 'Save' then save_current_game
@@ -138,7 +143,7 @@ class Hangman
     else
       puts "YOU WON!\nYou have guessed the SECRET WORD: #{secret_word}"
     end
+    reset?
   end
 end
 # rubocop: enable Metrics/ClassLength
-Hangman.new.play
