@@ -15,7 +15,7 @@ def exe
       loop do
         game = Hangman.new
         continue = game.play
-        break unless continue
+        exit unless continue
       end
       puts "\nThank you for playing! See you next time!"
     when 'h', 'H'
